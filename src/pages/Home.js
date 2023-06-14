@@ -1,13 +1,35 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import BlogCard from "../components/BlogCard";
 import ProductCard from "../components/ProductCard";
 import SpecialProduct from "../components/SpecialProduct";
 import Container from "../components/Container";
-import { services } from "../utils/Data";
-
+import { useDispatch, useSelector } from "react-redux";
+// import { services } from "../utils/Data";
+import { getAllBlogs } from "../features/blogs/blogSlice";
+import moment from "moment";
+import { getAllProducts } from "../features/products/productSlice";
 const Home = () => {
+  const blogsState = useSelector((state) => state?.blogs?.blogs?.data?.data);
+  const productsState = useSelector(
+    (state) => state?.products?.products?.data?.data
+  );
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const getBlogs = () => {
+    dispatch(getAllBlogs());
+  };
+
+  useEffect(() => {
+    getBlogs();
+    getProducts();
+  }, []);
+  console.log(blogsState);
+  const getProducts = () => {
+    dispatch(getAllProducts());
+  };
+  console.log(productsState);
   return (
     <>
       <Container class1="home-wrapper-1 py-5">
@@ -93,7 +115,7 @@ const Home = () => {
         <div className="row">
           <div className="col-12">
             <div className="servies d-flex align-items-center justify-content-between">
-              {services?.map((i, j) => {
+              {/* {services?.map((i, j) => {
                 return (
                   <div className="d-flex align-items-center gap-15" key={j}>
                     <img src={i.image} alt="services" />
@@ -103,12 +125,12 @@ const Home = () => {
                     </div>
                   </div>
                 );
-              })}
+              })} */}
             </div>
           </div>
         </div>
       </Container>
-      <Container class1="home-wrapper-2 py-5">
+      {/* <Container class1="home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">
             <div className="categories d-flex justify-content-between flex-wrap align-items-center">
@@ -171,16 +193,30 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </Container>
+      </Container> */}
       <Container class1="featured-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
             <h3 className="section-heading">Featured Collection</h3>
           </div>
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {productsState &&
+            productsState?.map((item, index) => {
+              if (item.tags === "Featured") {
+                console.log(item);
+                return (
+                  <SpecialProduct
+                    _id={item?._id}
+                    key={index}
+                    brand={item?.brand}
+                    title={item?.title}
+                    totalRating={item?.totalrating?.toString()}
+                    price={item?.price}
+                    sold={item?.sold}
+                    quantity={item?.quantity}
+                  />
+                );
+              }
+            })}
         </div>
       </Container>
 
@@ -256,10 +292,24 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-          <SpecialProduct />
-          <SpecialProduct />
-          <SpecialProduct />
-          <SpecialProduct />
+          {productsState &&
+            productsState?.map((item, index) => {
+              if (item.tags === "Special") {
+                console.log(item);
+                return (
+                  <SpecialProduct
+                    _id={item?._id}
+                    key={index}
+                    brand={item?.brand}
+                    title={item?.title}
+                    totalRating={item?.totalrating?.toString()}
+                    price={item?.price}
+                    sold={item?.sold}
+                    quantity={item?.quantity}
+                  />
+                );
+              }
+            })}
         </div>
       </Container>
       <Container class1="popular-wrapper py-5 home-wrapper-2">
@@ -269,10 +319,25 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {productsState &&
+            productsState?.map((item, index) => {
+              if (item.tags === "Popular") {
+                console.log(item);
+                return (
+                  <ProductCard
+                    _id={item?._id}
+                    grid={4}
+                    key={index}
+                    // image={item?.image[0]?.url}
+                    brand={item?.brand}
+                    title={item?.title}
+                    totalRating={item?.totalRating}
+                    description={item?.description}
+                    price={item?.price}
+                  />
+                );
+              }
+            })}
         </div>
       </Container>
       <Container class1="marque-wrapper home-wrapper-2 py-5">
@@ -317,18 +382,24 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-          <div className="col-3">
-            <BlogCard />
-          </div>
-          <div className="col-3">
-            <BlogCard />
-          </div>
-          <div className="col-3">
-            <BlogCard />
-          </div>
-          <div className="col-3">
-            <BlogCard />
-          </div>
+          {blogsState &&
+            blogsState?.map((item, index) => {
+              if (index < 3) {
+                return (
+                  <div className="col-3 mb-3" key={index}>
+                    <BlogCard
+                      id={item?._id}
+                      title={item?.title}
+                      description={item?.description}
+                      image={item?.image}
+                      date={moment(item?.create_at).format(
+                        "MMMM Do YYYY, h:mm a"
+                      )}
+                    />
+                  </div>
+                );
+              }
+            })}
         </div>
       </Container>
     </>

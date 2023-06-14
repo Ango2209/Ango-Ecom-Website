@@ -1,13 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import BlogCard from "../components/BlogCard";
 import Container from "../components/Container";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getAllBlogs } from "../features/blogs/blogSlice";
+import moment from "moment";
 const Blog = () => {
+  const [grid, setGrid] = useState(4);
+  const blogsState = useSelector((state) => state?.blogs?.blogs?.data?.data);
+  const dispatch = useDispatch();
+  const getBlogs = () => {
+    dispatch(getAllBlogs());
+  };
+
+  useEffect(() => {
+    getBlogs();
+  }, []);
+  console.log(blogsState);
   return (
     <>
-      <Meta title={"Blogs"} />
+      <Meta title={blogsState?.title} />
       <BreadCrumb title="Blogs" />
       <Container class1="blog-wrapper home-wrapper-2 py-5">
         <div className="row">
@@ -26,18 +39,22 @@ const Blog = () => {
           </div>
           <div className="col-9">
             <div className="row">
-              <div className="col-6 mb-3">
-                <BlogCard />
-              </div>
-              <div className="col-6 mb-3">
-                <BlogCard />
-              </div>
-              <div className="col-6 mb-3">
-                <BlogCard />
-              </div>
-              <div className="col-6 mb-3">
-                <BlogCard />
-              </div>
+              {blogsState &&
+                blogsState?.map((item, index) => {
+                  return (
+                    <div className="col-6 mb-3" key={index}>
+                      <BlogCard
+                        id={item?._id}
+                        title={item?.title}
+                        description={item?.description}
+                        image={item?.image}
+                        date={moment(item?.create_at).format(
+                          "MMMM Do YYYY, h:mm a"
+                        )}
+                      />
+                    </div>
+                  );
+                })}
             </div>
           </div>
         </div>
