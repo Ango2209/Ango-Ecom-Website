@@ -23,7 +23,6 @@ const Forgotpassword = () => {
     },
     validationSchema: emailSchema,
     onSubmit: (values) => {
-      console.log(values);
       dispatch(forgotPassword(values));
     },
   });

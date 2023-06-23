@@ -17,7 +17,7 @@ const Blog = () => {
   useEffect(() => {
     getBlogs();
   }, []);
-  console.log(blogsState);
+
   return (
     <>
       <Meta title={blogsState?.title} />

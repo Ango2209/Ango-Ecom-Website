@@ -55,7 +55,6 @@ const Cart = () => {
             </div>
             {userCartState &&
               userCartState?.map((item, index) => {
-                console.log(item);
                 subTotal = subTotal + item?.price * item?.quantity;
                 return (
                   <div

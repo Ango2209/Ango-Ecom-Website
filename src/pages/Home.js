@@ -25,11 +25,11 @@ const Home = () => {
     getBlogs();
     getProducts();
   }, []);
-  console.log(blogsState);
+
   const getProducts = () => {
     dispatch(getAllProducts());
   };
-  console.log(productsState);
+
   return (
     <>
       <Container class1="home-wrapper-1 py-5">
@@ -202,7 +202,6 @@ const Home = () => {
           {productsState &&
             productsState?.map((item, index) => {
               if (item.tags === "Featured") {
-                console.log(item);
                 return (
                   <SpecialProduct
                     _id={item?._id}
@@ -295,7 +294,6 @@ const Home = () => {
           {productsState &&
             productsState?.map((item, index) => {
               if (item.tags === "Special") {
-                console.log(item);
                 return (
                   <SpecialProduct
                     _id={item?._id}
@@ -322,7 +320,6 @@ const Home = () => {
           {productsState &&
             productsState?.map((item, index) => {
               if (item.tags === "Popular") {
-                console.log(item);
                 return (
                   <ProductCard
                     _id={item?._id}

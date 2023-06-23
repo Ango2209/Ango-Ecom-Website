@@ -17,7 +17,6 @@ const ProductCard = (props) => {
   const navigate = useNavigate();
   let location = useLocation();
   const addToWish = (id) => {
-    console.log(id);
     dispatch(addToWishList(id));
   };
 

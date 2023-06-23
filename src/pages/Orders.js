@@ -9,7 +9,7 @@ export const Orders = () => {
   const orderState = useSelector(
     (state) => state.orders?.orderedProduct?.orders
   );
-  console.log(orderState);
+
   useEffect(() => {
     dispatch(getUserOrders());
   }, []);

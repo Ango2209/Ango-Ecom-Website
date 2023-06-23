@@ -13,7 +13,7 @@ const SingleBlog = () => {
   const blogState = useSelector((state) => state?.blogs?.singleBlog);
   const location = useLocation();
   const getBlogId = location.pathname.split("/")[2];
-  console.log(typeof getBlogId);
+
   const dispatch = useDispatch();
   const getBlog = () => {
     dispatch(getABlog(getBlogId));
@@ -22,7 +22,7 @@ const SingleBlog = () => {
   useEffect(() => {
     getBlog();
   }, [getBlogId]);
-  console.log(blogState);
+
   return (
     <>
       <Meta title={blogState?.title} />

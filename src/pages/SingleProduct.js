@@ -58,20 +58,9 @@ const SingleProduct = () => {
       );
     }
   };
-  console.log(singleProductState);
-  const props = {
-    width: 594,
-    height: 600,
-    zoomWidth: 600,
-
-    img: singleProductState?.image[0]?.url
-      ? singleProductState?.image[0]?.url
-      : "https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg",
-  };
 
   const [orderedProduct, setorderedProduct] = useState(true);
   const copyToClipboard = (text) => {
-    console.log("text", text);
     var textField = document.createElement("textarea");
     textField.innerText = text;
     document.body.appendChild(textField);
@@ -99,7 +88,7 @@ const SingleProduct = () => {
       }, 500);
     }
   };
-  console.log(singleProductState?.ratings);
+
   return (
     <>
       <Meta title={"Product Name"} />
@@ -108,9 +97,14 @@ const SingleProduct = () => {
         <div className="row">
           <div className="col-6">
             <div className="main-product-image">
-              <div>
-                <ReactImageZoom {...props} />
-              </div>
+              <img
+                src={
+                  singleProductState?.image[0]?.url
+                    ? singleProductState?.image[0]?.url
+                    : "https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg"
+                }
+                alt=""
+              ></img>
             </div>
             <div className="other-product-images d-flex flex-wrap gap-15">
               {singleProductState?.image?.map((image, index) => {
@@ -389,7 +383,6 @@ const SingleProduct = () => {
           {productsState &&
             productsState?.map((item, index) => {
               if (item.tags === "Popular") {
-                console.log(item);
                 return (
                   <ProductCard
                     _id={item?._id}

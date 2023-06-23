@@ -23,7 +23,6 @@ const getCart = async () => {
 };
 
 const removeProductFromCart = async (id) => {
-  console.log(id);
   const response = await axios.delete(
     `${base_url}order/remove-from-cart/${id}`,
     config

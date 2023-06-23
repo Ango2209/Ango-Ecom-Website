@@ -20,7 +20,7 @@ const Header = () => {
   const productsState = useSelector(
     (state) => state?.products?.products?.data?.data
   );
-  console.log(productsState);
+
   const [productOpt, setProductOpt] = useState([]);
   const [total, setTotal] = useState(null);
   const navigate = useNavigate();

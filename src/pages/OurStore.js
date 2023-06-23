@@ -15,19 +15,30 @@ const OurStore = () => {
     (state) => state?.products?.products?.data?.data
   );
   const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState(null);
   const [brands, setBrands] = useState([]);
-  const [brand, setBrand] = useState([]);
+  const [brand, setBrand] = useState(null);
   const [tags, setTags] = useState([]);
-  const [tag, setTag] = useState([]);
-  const [minPrice, setMinPrice] = useState([]);
-  const [maxPrice, setMaxPrice] = useState([]);
+  const [tag, setTag] = useState(null);
+  const [minPrice, setMinPrice] = useState(null);
+  const [maxPrice, setMaxPrice] = useState(null);
   const [sort, setSort] = useState(null);
 
+  const dispatch = useDispatch();
+  const getProducts = () => {
+    dispatch(
+      getAllProducts({ sort, tag, brand, category, minPrice, maxPrice })
+    );
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, [sort, tag, brand, category, minPrice, maxPrice]);
   useEffect(() => {
     let category = [];
     let newBrands = [];
     let newTags = [];
-    let newColors = [];
+
     for (let i = 0; i < productsState?.length; i++) {
       const element = productsState[i];
       newBrands.push(element?.brand);
@@ -38,20 +49,7 @@ const OurStore = () => {
     setCategories(category);
     setTags(newTags);
   }, []);
-  console.log(
-    [...new Set(brands)],
-    [...new Set(categories)],
-    [...new Set(tags)]
-  );
-  const dispatch = useDispatch();
-  const getProducts = () => {
-    dispatch(getAllProducts());
-  };
 
-  useEffect(() => {
-    getProducts();
-  }, []);
-  console.log(productsState);
   return (
     <>
       <Meta title={"Our Store"} />
@@ -66,7 +64,7 @@ const OurStore = () => {
                   {categories &&
                     [...new Set(categories)].map((item, index) => {
                       return (
-                        <li key={index} onClick={() => setCategories(item)}>
+                        <li key={index} onClick={() => setCategory(item)}>
                           {item}
                         </li>
                       );
@@ -128,7 +126,7 @@ const OurStore = () => {
                       [...new Set(brands)].map((item, index) => {
                         return (
                           <span
-                            onClick={() => setBrands(item)}
+                            onClick={() => setBrand(item)}
                             key={index}
                             className="text-capitalize badge bg-light text-secondary rounded-3 py-2 px-3"
                           >
@@ -156,11 +154,11 @@ const OurStore = () => {
                     onChange={(e) => setSort(e.target.value)}
                   >
                     <option value="title">Alphabetically, A-Z</option>
-                    <option value="title">Alphabetically, Z-A</option>
+                    <option value="-title">Alphabetically, Z-A</option>
                     <option value="price">Price, low to high</option>
-                    <option value="price">Price, high to low</option>
+                    <option value="-price">Price, high to low</option>
                     <option value="createdAt">Date, old to new</option>
-                    <option value="createdAt">Date, new to old</option>
+                    <option value="-createdAt">Date, new to old</option>
                   </select>
                 </div>
                 <div className="d-flex align-items-center gap-10">
@@ -224,7 +222,6 @@ const OurStore = () => {
                 {productsState &&
                   productsState?.map((item, index) => {
                     if (item.tags === "Featured") {
-                      console.log(item);
                       return (
                         <SpecialProduct
                           _id={item?._id}
