@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "../features/users/userSlice";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
-import { getAProduct } from "../features/products/productSlice";
+
 const Header = () => {
   const [paginate, setPaginate] = useState(true);
   const dispatch = useDispatch();

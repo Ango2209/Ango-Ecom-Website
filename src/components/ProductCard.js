@@ -1,11 +1,9 @@
 import React from "react";
 import ReactStars from "react-rating-stars-component";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import prodcompare from "../images/prodcompare.svg";
+import { useLocation, useNavigate } from "react-router-dom";
+
 import wish from "../images/wish.svg";
-import wishlist from "../images/wishlist.svg";
-import watch from "../images/watch.jpg";
-import watch2 from "../images/watch-1.avif";
+
 import addcart from "../images/add-cart.svg";
 import view from "../images/view.svg";
 import { useDispatch } from "react-redux";
