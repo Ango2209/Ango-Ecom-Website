@@ -1,0 +1,19 @@
+{
+  "folders": [
+	{
+		"path": "../../../admin-app-ango"
+	},
+	{
+		"path": "../../../ANgo-E-Commerce"
+	},
+	{
+		"path": "../.."
+	},
+	{
+		"path": "../../../../ReactJs/tiktok-ui"
+	}
+],
+  "settings": {
+    "liveServer.settings.multiRootWorkspaceName": "admin-app-ango"
+  }
+}

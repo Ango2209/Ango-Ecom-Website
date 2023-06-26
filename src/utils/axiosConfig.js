@@ -1,4 +1,4 @@
-export const base_url = "http://127.0.0.1:5000/api/";
+export const base_url = "https://easy-blue-bluefish-vest.cyclic.app/api/";
 const getTokenFromLocalStorage = localStorage.getItem("token")
   ? localStorage.getItem("token")
   : null;
